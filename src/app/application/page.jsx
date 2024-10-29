@@ -1,8 +1,9 @@
+"use server";
 import React from "react";
 import { createClient } from "../_lib/supabase/server";
 import Link from "next/link";
-import FormBoard from "../_componnents/formBoard";
 import { createBoard } from "../_actions/board";
+import FormData from "../_componnents/FormData";
 
 const HomePage = async () => {
   const supabase = await createClient();
@@ -11,12 +12,8 @@ const HomePage = async () => {
   } = await supabase.auth.getUser();
   const { full_name, avatar_url } = user.user_metadata;
   const { data: boards } = await supabase.from("boards").select("*");
-  console.log(boards);
+  // console.log(boards);
 
-  const handleCreateBoard = async (title) => {
-    await createBoard(title);
-    // Optionally, re-fetch the boards or update the state to reflect the new board
-  };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 text-white">
@@ -46,7 +43,7 @@ const HomePage = async () => {
             </Link>
           ))}
         </div>
-        <FormBoard onSubmit={handleCreateBoard} />
+          <FormData></FormData>
       </div>
     </div>
   );

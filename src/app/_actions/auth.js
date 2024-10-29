@@ -4,12 +4,11 @@ import { redirect } from "next/navigation";
 import { createClient } from "../_lib/supabase/server";
 import { headers } from "next/headers";
 
-
 export const loginAction = async () => {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   // afin que l'url du site soit dynamique et facilement migrable vers un hébergeur
-  const origin = headers().get("origin");
+  const origin = (await headers()).get("origin");
 
   // on récupère ici l'url vers lequel envoyer l'utilisateur sur github. il n'est pas encore redirigé
   const { error, data } = await supabase.auth.signInWithOAuth({
